@@ -69,6 +69,14 @@
             font-weight: bold;
             color: white;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
         }
 
         .header h1 {
@@ -83,6 +91,86 @@
             font-weight: 300;
             opacity: 0.9;
             margin-bottom: 30px;
+        }
+
+        /* Event info (date row under title) */
+        .event-info {
+            margin: 1rem 0;
+            font-size: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-info-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .calendar-icon {
+            vertical-align: middle;
+        }
+
+        /* Featured sessions block */
+        .agenda {
+            margin-top: 30px;
+            background: rgba(255,255,255,0.12);
+            padding: 20px 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(6px);
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .agenda-title {
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            color: #fff;
+        }
+
+        .agenda-body {
+            text-align: left;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        .session {
+            margin-bottom: 4px;
+        }
+
+        .session-speaker {
+            color: #ffd27f;
+        }
+
+        .session-row {
+            display: flex;
+            align-items: center;
+            gap: 44px;
+            margin-top: 6px;
+        }
+
+        .session-time {
+            /* reserved for future tweaks */
+        }
+
+        .session-online {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* a bit more space between icon and text */
+        }
+
+        .location-icon {
+            vertical-align: middle;
+        }
+
+        .session-divider {
+            border: 0;
+            border-top: 1px solid rgba(255,255,255,0.3);
+            margin: 12px 0;
         }
 
         .stats {
@@ -375,23 +463,29 @@
             .header h1 {
                 font-size: 2.5rem;
             }
-            
+
             .stats {
                 flex-direction: column;
                 gap: 20px;
             }
-            
+
             .about-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .join-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .section {
                 padding: 40px 20px;
+            }
+
+            .session-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
             }
         }
     </style>
@@ -402,46 +496,85 @@
         <div class="header">
             <div class="header-content">
                 <div class="logo">
-                    <img src="https://avatars.githubusercontent.com/u/1284191?s=200&v=4">
+                    <img src="https://avatars.githubusercontent.com/u/1284191?s=200&v=4" alt="PyData Türkiye Logo">
                 </div>
                 <h1>PyData Turkiye Conference @2025</h1>
                 <p class="subtitle">Empowering Data Science Community in Turkiye</p>
-        
-                <div class="event-info" style="margin: 1rem 0; font-size: 1rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-                    <p style="display: flex; align-items: center; gap: 8px; margin: 0;">
+
+                <div class="event-info">
+                    <p class="event-info-row">
                         <!-- Calendar Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#00b3ff" viewBox="0 0 16 16" style="vertical-align: middle;">
+                        <svg class="calendar-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#00b3ff" viewBox="0 0 16 16">
                             <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h.5A1.5 1.5 0 0 1 15 2.5V4H1V2.5A1.5 1.5 0 0 1 2.5 1H3v-.5a.5.5 0 0 1 .5-.5zM1 5v8.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5V5H1z"/>
                         </svg>
                         <span>27 November 2025, 16:00 (GMT+3)</span>
                     </p>
-                    <p style="display: flex; align-items: center; gap: 8px; margin: 0;">
-                        <!-- Location Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#00b3ff" viewBox="0 0 16 16" style="vertical-align: middle;">
-                            <path d="M8 0a5.5 5.5 0 0 0-5.5 5.5c0 3.038 4.5 9.5 5.5 10.5s5.5-7.462 5.5-10.5A5.5 5.5 0 0 0 8 0zm0 7.5A2 2 0 1 1 8 3a2 2 0 0 1 0 4.5z"/>
-                        </svg>
-                        <span>Online</span>
-                    </p>
                 </div>
-        
-                <div class="stats">
-                    <div class="stat">
-                        <span class="stat-number">200+</span>
-                        <span class="stat-label">Global Chapters</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">200k+</span>
-                        <span class="stat-label">Global Members</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">Open</span>
-                        <span class="stat-label">Source Focus</span>
+
+                <!-- ★ ★ ★ SPEAKER SESSIONS ★ ★ ★ -->
+                <div class="agenda">
+                    <h3 class="agenda-title">Agenda</h3>
+
+                    <div class="agenda-body">
+                        <div class="session">
+                            <p>
+                                <strong>Keynote:</strong><br>
+                                <span class="session-speaker">Seniz Gayde Ayata — AIATUS AI</span><br>
+                                <em>“Designing the Multimodal & Agentic Future of AI”</em>
+                            </p>
+                            <div class="session-row">
+                                <span class="session-time"><strong>Time:</strong> 27 November • 16:00 (GMT+3)</span>
+                                <span class="session-online">
+                                    <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00b3ff" viewBox="0 0 16 16">
+                                        <path d="M8 0a5.5 5.5 0 0 0-5.5 5.5c0 3.038 4.5 9.5 5.5 10.5s5.5-7.462 5.5-10.5A5.5 5.5 0 0 0 8 0zm0 7.5A2 2 0 1 1 8 3a2 2 0 0 1 0 4.5z"/>
+                                    </svg>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+
+                        <hr class="session-divider">
+
+                        <div class="session">
+                            <p>
+                                <strong>Speaker:</strong><br>
+                                <span class="session-speaker">TBD</span>
+                            </p>
+                            <div class="session-row">
+                                <span class="session-time"><strong>Time:</strong> 27 November • 17:00 (GMT+3)</span>
+                                <span class="session-online">
+                                    <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00b3ff" viewBox="0 0 16 16">
+                                        <path d="M8 0a5.5 5.5 0 0 0-5.5 5.5c0 3.038 4.5 9.5 5.5 10.5s5.5-7.462 5.5-10.5A5.5 5.5 0 0 0 8 0zm0 7.5A2 2 0 1 1 8 3a2 2 0 0 1 0 4.5z"/>
+                                    </svg>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
+
+                        <hr class="session-divider">
+
+                        <div class="session">
+                            <p>
+                                <strong>Speaker:</strong><br>
+                                <span class="session-speaker">Emre Okcular — OpenAI</span><br>
+                                <em>“Context Engineering”</em>
+                            </p>
+                            <div class="session-row">
+                                <span class="session-time"><strong>Time:</strong> 27 November • 18:00 (GMT+3)</span>
+                                <span class="session-online">
+                                    <svg class="location-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#00b3ff" viewBox="0 0 16 16">
+                                        <path d="M8 0a5.5 5.5 0 0 0-5.5 5.5c0 3.038 4.5 9.5 5.5 10.5s5.5-7.462 5.5-10.5A5.5 5.5 0 0 0 8 0zm0 7.5A2 2 0 1 1 8 3a2 2 0 0 1 0 4.5z"/>
+                                    </svg>
+                                    Online
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- ★ ★ ★ END OF SPEAKER SESSIONS ★ ★ ★ -->
+
             </div>
         </div>
-        
-        
 
         <!-- About Section -->
         <div class="section">
@@ -449,9 +582,9 @@
             <div class="about-grid">
                 <div class="about-text">
                     <p>PyData Turkiye is a local chapter of the global PyData community, dedicated to bringing together data enthusiasts, professionals, and researchers from Turkiye. We focus on the use and development of open-source data science tools and libraries in Python.</p>
-                    
+
                     <p>By fostering an inclusive and collaborative environment, PyData Turkiye aims to facilitate knowledge sharing, networking, and the advancement of data science skills through meetups, workshops, and conferences.</p>
-                    
+
                     <p>Whether you are a beginner or an experienced practitioner, PyData Turkiye provides a platform to learn, share, and grow in the field of data science.</p>
                 </div>
                 <div class="about-features">
@@ -505,7 +638,7 @@
                         <span class="topic-tag">Testing Strategies</span>
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🤖</div>
@@ -521,7 +654,7 @@
                         <span class="topic-tag">Production Implementation</span>
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">👁️</div>
@@ -539,7 +672,7 @@
                         <span class="topic-tag">Dataset Preparation</span>
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🎯</div>
@@ -571,7 +704,7 @@
                         <strong>Keynote:</strong> "Technical Skills and Career Advancement in AI and Data Science" - Leading expert in AI career development and technical skill advancement strategies.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🔍</div>
@@ -581,7 +714,7 @@
                         <strong>Session:</strong> "Introduction to Retrieval Augmented Generation (RAG)" - Expert presentation on cutting-edge AI-powered information retrieval and generation systems.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">⚡</div>
@@ -591,7 +724,7 @@
                         <strong>Session:</strong> "Use of HPC systems in the world of data" - Deep dive into high-performance computing applications for large-scale data processing.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🐍</div>
@@ -601,7 +734,7 @@
                         <strong>Session:</strong> "Python semi-patterns of style and structure" - Advanced Python programming patterns and best practices for clean, maintainable code.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🚀</div>
@@ -611,7 +744,7 @@
                         <strong>Session:</strong> "Practical tips & tricks for production ML pipelines" - Industry insights on deploying and maintaining machine learning systems at scale.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🏭</div>
@@ -621,7 +754,7 @@
                         <strong>Session:</strong> "Converging Simulations and Reality: Advancing Industrial AI" - Exploring the intersection of simulation technologies and real-world industrial applications.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🛒</div>
@@ -631,7 +764,7 @@
                         <strong>Session:</strong> "Candidate Recall with Two Tower Approach for Personalized Product" - Advanced recommendation systems and personalization strategies.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">📦</div>
@@ -641,7 +774,7 @@
                         <strong>Session:</strong> "Big Data, Bigger Impact: Optimizing Supply Chain Efficiency" - Data-driven approaches to supply chain optimization and logistics.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🧪</div>
@@ -651,7 +784,7 @@
                         <strong>Session:</strong> "The ways to cook data fixtures for a pipeline's test" - Testing strategies and data fixture management for robust data pipelines.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">🤖</div>
@@ -661,7 +794,7 @@
                         <strong>Session:</strong> "Model Context Protocol" - Framework principles, implementation strategies, and real-world applications for AI model interactions.
                     </div>
                 </div>
-                
+
                 <div class="event-card">
                     <div class="event-header">
                         <div class="event-icon">👁️</div>
